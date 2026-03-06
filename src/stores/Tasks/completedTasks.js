@@ -1,11 +1,17 @@
 import { ref } from 'vue'
+import { loadTasks, saveTasks } from '@/helpers/localStore'
 
-export const useCompletedTasks = (smeta) => {
-  const completedTask = ref()
+
+export const useCompletedTasks = () => {
+  const completedTask = ref(loadTasks('completedTasks'))
+
+  const addFinishTask = (task) =>{
+    completedTask.value.unshift(task)
+    saveTasks('completedTasks', completedTask.value)
+  }
 
   return {
-    changeDelivery,
-    changePromotion,
-    changePayment,
+    completedTask,
+    addFinishTask
   }
 }

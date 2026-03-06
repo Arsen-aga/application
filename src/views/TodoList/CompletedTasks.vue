@@ -1,5 +1,4 @@
 <script setup>
-import AdditionForm from '@/components/TodoList/AdditionForm.vue'
 import Task from '@/components/TodoList/Task.vue'
 import { useTasksStore } from '@/stores/Tasks'
 import { ref } from 'vue'
@@ -7,7 +6,7 @@ import { ref } from 'vue'
 const tasksStore = useTasksStore()
 const closeForm = (value) => (isFormOpen.value = value)
 
-const showAllTasks = () => console.log('tasksStore', tasksStore.taskList)
+const showAllTasks = () => console.log('tasksStore', tasksStore.completedTask)
 </script>
 <template>
   <div class="completed-tasks">
@@ -15,7 +14,7 @@ const showAllTasks = () => console.log('tasksStore', tasksStore.taskList)
     <div class="list">
       <Task
         :task="task"
-        v-for="task in tasksStore.taskList"
+        v-for="task in tasksStore.completedTask"
         @closeForm="closeForm"
         :key="task.id"
       />

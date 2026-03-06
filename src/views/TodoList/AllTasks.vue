@@ -23,6 +23,7 @@ const showAllTasks = () => console.log('tasksStore', tasksStore.taskList)
         v-for="task in tasksStore.taskList"
         @closeForm="closeForm"
         :key="task.id"
+        :edit="true"
       />
     </div>
     <div class="add-task" v-if="!isFormOpen" @click="openForm"><span>+</span>Добавить задачу</div>
