@@ -27,11 +27,8 @@ const isOpenModal = ref(false)
 const isChangeTask = computed(() => tasksStore.editingTaskId === props.task.id)
 
 const finishTask = (task) => {
-  isChecked.value = true
   isAnimate.value = true
-  setTimeout(() => {
-    isChecked.value = false
-  }, 500)
+  showAnimation()
   tasksStore.updateTaskList(task)
 }
 const changeTask = () => {
@@ -54,7 +51,15 @@ const closeModal = () =>
 
 const deleteTask = (task) =>{
   tasksStore.deleteTask(task)
+  showAnimation()
   closeModal()
+}
+
+const showAnimation = () =>{
+  isChecked.value = true
+  setTimeout(() => {
+    isChecked.value = false
+  }, 500)
 }
 </script>
 <template>
@@ -103,6 +108,8 @@ const deleteTask = (task) =>{
   margin-top: 5px;
   width: 25px;
   height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   border-radius: 50%;
   border: 1px solid #ccc;
 }
