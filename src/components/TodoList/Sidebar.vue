@@ -7,7 +7,7 @@ const showBeforeSidebar = () => (isShowBeforeSidebar.value = true)
 <template>
   <div class="sidebar" :class="{ active: !isShowBeforeSidebar }">
     <nav class="menu">
-      <button class="button" @click="showBeforeSidebar">Назад</button>
+      <button class="button" @click="showBeforeSidebar">Меню</button>
       <RouterLink class="link" to="/todolist/all-tasks">Все задачи</RouterLink>
       <RouterLink class="link" to="/todolist/completed">Выполнено</RouterLink>
     </nav>

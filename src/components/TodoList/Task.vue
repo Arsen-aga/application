@@ -13,8 +13,8 @@ const props = defineProps({
   },
   edit: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 const tasksStore = useTasksStore()
 
@@ -45,14 +45,15 @@ const saveTask = () => {
   tasksStore.clearEditingTask()
 }
 
-const openDeleteTaskModal = () =>
-  isOpenModal.value = true
+const openDeleteTaskModal = () => (isOpenModal.value = true)
 
+const closeModal = () => (isOpenModal.value = false)
 
-const closeModal = () =>
-  isOpenModal.value = false
-
-const deleteTask = (task) =>{
+const deleteTask = (task) => {
+  isChecked.value = true
+  setTimeout(() => {
+    isChecked.value = false
+  }, 500)
   tasksStore.deleteTask(task)
   closeModal()
 }
@@ -60,13 +61,28 @@ const deleteTask = (task) =>{
 <template>
   <div>
     <div class="task" v-if="!isChangeTask" :class="{ checked: isChecked }">
-      <div class="check" v-if="edit" :class="{ checked: isAnimate }" @click="finishTask(task)"></div>
+      <div
+        class="check"
+        v-if="edit"
+        :class="{ checked: isAnimate }"
+        @click="finishTask(task)"
+      ></div>
       <div class="right">
         <h4 class="title">{{ task.title }}</h4>
         <p class="descr">{{ task.description }}</p>
       </div>
-      <IconEdit v-if="edit" @click="changeTask(task)" class="edit" current-color="hsla(160, 100%, 37%, 1)" />
-      <IconCart v-if="edit" @click="openDeleteTaskModal" class="edit" current-color="hsla(160, 100%, 37%, 1)" />
+      <IconEdit
+        v-if="edit"
+        @click="changeTask(task)"
+        class="edit"
+        current-color="hsla(160, 100%, 37%, 1)"
+      />
+      <IconCart
+        v-if="edit"
+        @click="openDeleteTaskModal"
+        class="edit"
+        current-color="hsla(160, 100%, 37%, 1)"
+      />
     </div>
     <AdditionForm v-if="isChangeTask" :edit-task="task" @closeForm="saveTask" />
     <Modal v-if="isOpenModal" @closeModal="closeModal">
