@@ -13,7 +13,7 @@ const tasksStore = useTasksStore()
 const emit = defineEmits(['closeForm'])
 const closeForm = () => emit('closeForm', false)
 
-const descriptionInput = ref('')
+const titleInput = ref('')
 const newTask = ref({
   id: new Date().getTime(),
   title: '',
@@ -34,17 +34,20 @@ const addTask = () => {
 }
 const saveTask = () => {
   tasksStore.changeTask(newTask.value)
-  emit('closeForm', false)
   resetForm()
+  closeForm()
 }
 
-const handleLoginEnter = () => {
-  if (newTask.value.title.trim() !== '') {
-    descriptionInput.value.focus()
+const handleInputEnter = () =>{
+  if(newTask.value.title.trim() !== ''){
+    props.editTask ? saveTask() : addTask()
+  }else{
+    titleInput.value.focus()
   }
 }
 
 onMounted(() => {
+  titleInput.value.focus()
   if (props.editTask) {
     newTask.value = props.editTask
   }
@@ -59,18 +62,18 @@ onMounted(() => {
   <form class="addition-form">
     <input
       type="text"
+      ref="titleInput"
       v-model="newTask.title"
-      @keyup.enter="handleLoginEnter"
+      @keyup.enter="handleInputEnter"
       class="input"
       placeholder="Название задачи"
     />
     <input
       type="text"
-      ref="descriptionInput"
       v-model="newTask.description"
       class="input"
       placeholder="Описание задачи"
-      @keyup.enter="editTask ? saveTask() : addTask()"
+      @keyup.enter="handleInputEnter"
     />
 
     <div class="buttons">
